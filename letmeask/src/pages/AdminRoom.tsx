@@ -12,6 +12,8 @@ import { useAuth } from '../hooks/useAuth';
 import { useRoom } from '../hooks/useRoom';
 import { database } from '../services/firebase';
 
+
+import { useTheme } from '../hooks/useTheme';
 import '../styles/room.scss';
 
 type RoomParams = {
@@ -23,6 +25,7 @@ export function AdminRoom() {
   const history = useHistory()
   const params = useParams<RoomParams>();
   const roomId = params.id;
+  const { theme, toggleTheme} = useTheme();
 
   const { title, questions, authorRoom } = useRoom(roomId)
 
@@ -61,10 +64,14 @@ export function AdminRoom() {
           <p>Você não é o administrador, por favor retorna à <Link to={`/rooms/${roomId}`}>sala</Link></p>
         </div>
       ) : (
-        <div id="page-room">
+        
+        <div id="page-room" className={theme}>
+          <button id="themeToggler" onClick={toggleTheme}>{theme}</button>
           <header>
             <div className="content">
+              <div className="LogoImage">
               <img src={logoImg} alt="Letmeask" />
+              </div>
               <Link className='Link' to={`/rooms/${roomId}`}>Retornar à sala</Link>
               <div>
                 <RoomCode code={roomId} />
@@ -75,7 +82,7 @@ export function AdminRoom() {
 
           <main>
             <div className="room-title">
-              <h1>Sala {title}</h1>
+              <h1 className={theme}>Sala {title}</h1>
               {questions.length > 0 && <span>{questions.length} pergunta(s)</span>}
             </div>
 

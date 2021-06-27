@@ -9,6 +9,7 @@ import { RoomCode } from '../components/RoomCode';
 
 import { useAuth } from '../hooks/useAuth';
 import { useRoom } from '../hooks/useRoom';
+import { useTheme } from '../hooks/useTheme';
 import { database } from '../services/firebase';
 
 import '../styles/room.scss';
@@ -24,7 +25,8 @@ export function Room() {
   const [newQuestion, setNewQuestion] = useState('');
   const roomId = params.id;
 
-  const { title, questions, authorRoom } = useRoom(roomId)
+  const { title, questions } = useRoom(roomId)
+  const { theme, toggleTheme} = useTheme();
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault();
@@ -66,10 +68,11 @@ export function Room() {
   }
 
   return (
-    <div id="page-room">
+    <div id="page-room" className={theme}>
+      <button id="themeToggler" onClick={toggleTheme}>{theme}</button>
       <header>
         <div className="content">
-          <a href="/"><img src={logoImg} alt="Letmeask" /></a>
+          <a  className='LogoImage'href="/"><img src={logoImg} alt="Letmeask" /></a>
           <Link className='Link' to={`/admin/rooms/${roomId}`}>Acessar Opções de Administrador</Link>
           <RoomCode code={roomId} />
         </div>
@@ -77,7 +80,7 @@ export function Room() {
 
       <main>
         <div className="room-title">
-          <h1>Sala {title}</h1>
+          <h1 className={theme}>Sala {title}</h1>
           {questions.length > 0 && <span>{questions.length} pergunta(s)</span>}
         </div>
 
@@ -92,7 +95,7 @@ export function Room() {
             {user ? (
               <div className="user-info">
                 <img src={user.avatar} alt={user.name} />
-                <span>{user.name}</span>
+                <span className={theme}>{user.name}</span>
               </div>
             ) : (
               <span>Para enviar uma pergunta, <Link to='/'>entre usando o código de sala</Link>.</span>
