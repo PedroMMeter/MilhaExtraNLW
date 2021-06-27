@@ -1,7 +1,7 @@
 # MilhaExtraNLW
 
 As seguintes alterações foram feitas:
-Dark Theme;
+Dark Theme em todas as páginas;
 Nas páginas: Home, NewRoom, Room e AdminRoom foi adicionado um botão para fazer a transição entre 'light' e 'dark';
 Ao criar uma sala, agora você é redirecionado á pagina de administrador ao invés da pagina de viewer;
 Na página Room e Admin, agora possui um botão para alternar entre a sala dos viewers e do administrador;
